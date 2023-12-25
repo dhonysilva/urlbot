@@ -12,7 +12,7 @@ defmodule Urlbot.Users.User do
 
     field :account_name, :string, virtual: true
 
-    belongs_to :account, UrlbotWeb.Accounts.Account
+    belongs_to :account, Urlbot.Accounts.Account
 
     timestamps()
   end

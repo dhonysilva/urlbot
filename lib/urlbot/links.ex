@@ -17,8 +17,9 @@ defmodule Urlbot.Links do
       [%Link{}, ...]
 
   """
-  def list_links do
-    Repo.all(Link)
+  def list_links(account) do
+    from(s in Link, where: s.account_id == ^account.id, order_by: [asc: :id])
+    |> Repo.all()
   end
 
   @doc """
@@ -35,7 +36,9 @@ defmodule Urlbot.Links do
       ** (Ecto.NoResultsError)
 
   """
-  def get_link!(id), do: Repo.get!(Link, id)
+  def get_link!(account, id) do
+    Repo.get_by!(Link, account_id: account.id, id: id)
+  end
 
   @doc """
   Creates a link.
@@ -49,8 +52,8 @@ defmodule Urlbot.Links do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_link(attrs \\ %{}) do
-    %Link{}
+  def create_link(account, attrs \\ %{}) do
+    Ecto.build_assoc(account, :links)
     |> Link.changeset(attrs)
     |> Repo.insert()
   end

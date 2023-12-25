@@ -19,7 +19,7 @@ defmodule Urlbot.Links.Link do
   @doc false
   def changeset(link, attrs) do
     link
-    |> cast(attrs, [:url, :visits])
-    |> validate_required([:url, :visits])
+    |> cast(attrs, [:url, :visits, :account_id])
+    |> validate_required([:url, :visits, :account_id])
   end
 end

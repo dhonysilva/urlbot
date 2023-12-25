@@ -15,6 +15,16 @@ defmodule UrlbotWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated, error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
+  scope "/", UrlbotWeb do
+    pipe_through [:protected, :browser]
+
+    resources "/links", LinkController
+  end
+
   scope "/" do
     pipe_through :browser
 
@@ -25,8 +35,6 @@ defmodule UrlbotWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-
-    resources "/links", LinkController
   end
 
   # Other scopes may use custom stacks.
