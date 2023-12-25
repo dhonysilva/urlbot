@@ -7,6 +7,10 @@ defmodule Urlbot.Users.User do
   schema "users" do
     pow_user_fields()
 
+    field :account_name, :string, virtual: true
+
+    belongs_to :account, UrlbotWeb.Accounts.Account
+
     timestamps()
   end
 end

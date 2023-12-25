@@ -7,6 +7,8 @@ defmodule Urlbot.Accounts.Account do
   schema "accounts" do
     field :name, :string
 
+    has_many :users, UrlbotWeb.Users.User
+
     timestamps()
   end
 
