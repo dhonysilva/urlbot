@@ -4,6 +4,7 @@ defmodule Urlbot.Links do
   """
 
   import Ecto.Query, warn: false
+  alias Phoenix.HTML.Link
   alias Urlbot.Repo
 
   alias Urlbot.Links.Link
@@ -38,6 +39,15 @@ defmodule Urlbot.Links do
   """
   def get_link!(account, hash) do
     Repo.get_by!(Link, account_id: account.id, hash: hash)
+  end
+
+  def def_short_url_link!(id) do
+    Repo.get!(Link, id: id)
+  end
+
+  def increment_visits(%Link{} = link) do
+    from(s in Link, where: s.id == ^link.hash, update: [inc: [visits: 1]])
+    |> Repo.update_all([])
   end
 
   @doc """
