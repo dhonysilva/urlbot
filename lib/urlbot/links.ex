@@ -18,7 +18,7 @@ defmodule Urlbot.Links do
 
   """
   def list_links(account) do
-    from(s in Link, where: s.account_id == ^account.id, order_by: [asc: :id])
+    from(s in Link, where: s.account_id == ^account.id, order_by: [asc: :hash])
     |> Repo.all()
   end
 
@@ -36,8 +36,8 @@ defmodule Urlbot.Links do
       ** (Ecto.NoResultsError)
 
   """
-  def get_link!(account, id) do
-    Repo.get_by!(Link, account_id: account.id, id: id)
+  def get_link!(account, hash) do
+    Repo.get_by!(Link, account_id: account.id, hash: hash)
   end
 
   @doc """

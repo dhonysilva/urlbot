@@ -5,7 +5,8 @@ defmodule UrlbotWeb.LinkController do
   alias Urlbot.Links.Link
 
   def index(conn, _params) do
-    links = Links.list_links()
+    current_account = conn.assigns.current_account
+    links = Links.list_links(current_account)
     render(conn, :index, links: links)
   end
 
@@ -15,7 +16,9 @@ defmodule UrlbotWeb.LinkController do
   end
 
   def create(conn, %{"link" => link_params}) do
-    case Links.create_link(link_params) do
+    current_account = conn.assigns.current_account
+
+    case Links.create_link(current_account, link_params) do
       {:ok, link} ->
         conn
         |> put_flash(:info, "Link created successfully.")
@@ -27,18 +30,22 @@ defmodule UrlbotWeb.LinkController do
   end
 
   def show(conn, %{"id" => id}) do
-    link = Links.get_link!(id)
+    current_account = conn.assigns.current_account
+    link = Links.get_link!(current_account, id)
     render(conn, :show, link: link)
   end
 
   def edit(conn, %{"id" => id}) do
-    link = Links.get_link!(id)
+    current_account = conn.assigns.current_account
+    link = Links.get_link!(current_account, id)
     changeset = Links.change_link(link)
     render(conn, :edit, link: link, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "link" => link_params}) do
-    link = Links.get_link!(id)
+    current_account = conn.assigns.current_account
+
+    link = Links.get_link!(current_account, id)
 
     case Links.update_link(link, link_params) do
       {:ok, link} ->
@@ -52,7 +59,8 @@ defmodule UrlbotWeb.LinkController do
   end
 
   def delete(conn, %{"id" => id}) do
-    link = Links.get_link!(id)
+    current_account = conn.assigns.current_account
+    link = Links.get_link!(current_account, id)
     {:ok, _link} = Links.delete_link(link)
 
     conn

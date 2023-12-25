@@ -17,6 +17,7 @@ defmodule UrlbotWeb.Router do
 
   pipeline :protected do
     plug Pow.Plug.RequireAuthenticated, error_handler: Pow.Phoenix.PlugErrorHandler
+    plug UrlbotWeb.Plugs.SetCurrentAccount
   end
 
   scope "/", UrlbotWeb do
