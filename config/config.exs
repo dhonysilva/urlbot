@@ -61,6 +61,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :urlbot, :pow,
+  web_module: UrlbotWeb,
   user: Urlbot.Users.User,
   repo: Urlbot.Repo
 
