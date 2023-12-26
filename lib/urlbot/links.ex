@@ -41,8 +41,8 @@ defmodule Urlbot.Links do
     Repo.get_by!(Link, account_id: account.id, hash: hash)
   end
 
-  def def_short_url_link!(id) do
-    Repo.get!(Link, id: id)
+  def get_short_url_link!(id) do
+    Repo.get!(Link, hash: id)
   end
 
   def increment_visits(%Link{} = link) do

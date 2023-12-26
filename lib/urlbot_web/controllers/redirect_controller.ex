@@ -4,8 +4,8 @@ defmodule UrlbotWeb.RedirectController do
   alias Urlbot.Links
 
   def show(conn, %{"id" => id}) do
-    shor_url = Links.get_short_url!(id)
-    Links.increment_visits(shor_url)
-    redirect(conn, external: shor_url.url)
+    short_url = Links.get_short_url_link!(id)
+    Links.increment_visits(short_url)
+    redirect(conn, external: short_url.url)
   end
 end
