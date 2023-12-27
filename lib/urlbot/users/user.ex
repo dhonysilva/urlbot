@@ -10,6 +10,7 @@ defmodule Urlbot.Users.User do
   schema "users" do
     pow_user_fields()
 
+    # To be removed. It needs to be stored on Account schema
     field :account_name, :string, virtual: true
 
     belongs_to :account, Urlbot.Accounts.Account
