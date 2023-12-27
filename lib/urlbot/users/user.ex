@@ -14,6 +14,9 @@ defmodule Urlbot.Users.User do
 
     belongs_to :account, Urlbot.Accounts.Account
 
+    has_many :account_memberships, Urlbot.Accounts.Membership
+    has_many :accounts, through: [:account_memberships, :account]
+
     timestamps()
   end
 
