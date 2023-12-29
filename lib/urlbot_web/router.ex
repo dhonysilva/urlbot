@@ -11,6 +11,10 @@ defmodule UrlbotWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :app_layout do
+    plug :put_root_layout, html: {UrlbotWeb.LayoutView, :app}
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -38,6 +42,12 @@ defmodule UrlbotWeb.Router do
     get "/", PageController, :home
 
     get "/links/:id", RedirectController, :show
+
+    scope alias: Live, assigns: %{connect_live_socket: true} do
+      pipe_through [:app_layout, UrlbotWeb.RequireAccountPlug]
+
+      live "/accounts", Accounts, :index, as: :account
+    end
   end
 
   # Other scopes may use custom stacks.
